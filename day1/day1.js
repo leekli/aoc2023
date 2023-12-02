@@ -1,15 +1,18 @@
 const part1 = (input) => {
   if (input.length === 0) return 0;
 
+  // Parse the input
+  const parsedInputLines = input.split('\n').map((word) => word.trim());
+
   let total = 0;
   const numsByLine = [];
 
-  const parsedInputLines = input.split('\n').map((word) => word.trim());
-
+  // Match the regex for any digits in each line
   parsedInputLines.forEach((line) => {
     numsByLine.push(line.match(/\d/g));
   });
 
+  // For each line take the first and last index, concatenate the 2 strings then turn to a Number
   numsByLine.forEach((line) => {
     let strNumsAdded = '';
 
@@ -25,9 +28,8 @@ const part1 = (input) => {
 const part2 = (input) => {
   if (input.length === 0) return 0;
 
-  let total = 0;
-  const numsByLine = [];
-  const regex = /one|two|three|four|five|six|seven|eight|nine|\d/g;
+  // Parse the input
+  const parsedInputLines = input.split('\n').map((word) => word.trim());
 
   const numLookup = {
     one: 1,
@@ -41,9 +43,13 @@ const part2 = (input) => {
     nine: 9,
   };
 
-  const parsedInputLines = input.split('\n').map((word) => word.trim());
+  let total = 0;
+  const numsByLine = [];
+  const regex = /one|two|three|four|five|six|seven|eight|nine|\d/g;
 
+  // For each line conduct the regex check
   parsedInputLines.forEach((line) => {
+    // Deal with edge cases where two numbers may end and start with the same letter but not fully spelt
     const replacedLine = line
       .replace(/oneight/i, '1e8')
       .replace(/eightwo/i, '8t2')
@@ -54,13 +60,10 @@ const part2 = (input) => {
       .replace(/eighthree/i, '8t3')
       .replace(/nineight/i, '9e8');
 
-    const matchedNums = [];
-
-    matchedNums.push(replacedLine.match(regex).flat());
-
-    numsByLine.push(matchedNums.flat());
+    numsByLine.push(replacedLine.match(regex));
   });
 
+  // For each line take the first and last index, concatenate the 2 strings then turn to a Number (if not a number then use the lookup for the actual digit spelt word)
   numsByLine.forEach((line) => {
     let strNumsAdded = '';
     const firstNum = line[0];
