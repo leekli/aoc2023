@@ -1,4 +1,4 @@
-gtlbhbjgkrb5sixfivefivetwosix
+module.exports = `gtlbhbjgkrb5sixfivefivetwosix
 ninesixrgxccvrqscbskgzxh6cpvpxsqnb6
 dxxzrlzkksfsffp4
 sbzvmddhnjtwollnjv33d2lbcscstqt
@@ -997,4 +997,4 @@ oneqdlsb7sixllszjbceight
 xmqxqsixpgclxldnvlzvjm7nine4
 fourfive4tttldbmmkxvhqrmvmrkpxfzbd7
 44two1
-eightrtsjszc2
+eightrtsjszc2`;
