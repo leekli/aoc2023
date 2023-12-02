@@ -1,5 +1,5 @@
-const { part1, part2 } = require('../../day1/day1.js');
-const mainInputData = require('../../day1/day1-input.js');
+const { part1, part2 } = require('../day1/day1.js');
+const mainInputData = require('../day1/day1-input.js');
 
 describe('AOC 2023: Day 1', () => {
   describe('Part 1', () => {
