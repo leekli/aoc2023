@@ -47,14 +47,14 @@ const part2 = (input) => {
   parsedInputLines.forEach((line) => {
     // Deal with edge cases where two numbers may end and start with the same letter but not fully spelt
     const replacedLine = line
-      .replace(/oneight/i, '1e8')
-      .replace(/eightwo/i, '8t2')
-      .replace(/twone/i, '2o1')
-      .replace(/threeight/i, '3e8')
-      .replace(/fiveight/i, '5e8')
-      .replace(/sevenine/i, '7n9')
-      .replace(/eighthree/i, '8t3')
-      .replace(/nineight/i, '9e8');
+      .replace(/oneight/i, '18')
+      .replace(/eightwo/i, '82')
+      .replace(/twone/i, '21')
+      .replace(/threeight/i, '38')
+      .replace(/fiveight/i, '58')
+      .replace(/sevenine/i, '79')
+      .replace(/eighthree/i, '83')
+      .replace(/nineight/i, '98');
 
     numsByLine.push(replacedLine.match(regex));
   });
