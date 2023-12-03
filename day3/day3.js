@@ -49,6 +49,71 @@ const part1 = (input) => {
   return total;
 };
 
+const part2 = (input) => {
+  let total = 0;
+
+  const splitLines = input.split('\n').map((line) => line.trim());
+
+  const numbersList = buildNumsArr(splitLines);
+  const onlyGearsymbolsList = buildSymbolsArr(splitLines).filter(
+    (symbol) => symbol.symbol === '*'
+  );
+
+  for (let i = 0; i < numbersList.length; i++) {
+    // for each number in an individual row
+    for (let j = 0; j < onlyGearsymbolsList.length; j++) {
+      // check if a symbol is to the right
+      if (onlyGearsymbolsList[j].row === numbersList[i].row) {
+        if (onlyGearsymbolsList[j].index === numbersList[i].endIndex) {
+          onlyGearsymbolsList[j].numsAdjacentTo.push(numbersList[i].num);
+          numbersList[i] = { numChecked: true };
+        }
+      }
+      // check if a symbol is to the left
+      if (onlyGearsymbolsList[j].row === numbersList[i].row) {
+        if (onlyGearsymbolsList[j].index + 1 === numbersList[i].startIndex) {
+          onlyGearsymbolsList[j].numsAdjacentTo.push(numbersList[i].num);
+          numbersList[i] = { numChecked: true };
+        }
+      }
+      // check if a symbol is to below the number & diagonal bottom left or right
+      if (onlyGearsymbolsList[j].row - 1 === numbersList[i].row) {
+        if (
+          onlyGearsymbolsList[j].index >= numbersList[i].startIndex - 1 &&
+          onlyGearsymbolsList[j].index <= numbersList[i].endIndex
+        ) {
+          onlyGearsymbolsList[j].numsAdjacentTo.push(numbersList[i].num);
+          numbersList[i] = { numChecked: true };
+        }
+      }
+      // check if a symbol is to above the number & diagonal top left or right
+      if (onlyGearsymbolsList[j].row === numbersList[i].row - 1) {
+        if (
+          onlyGearsymbolsList[j].index >= numbersList[i].startIndex - 1 &&
+          onlyGearsymbolsList[j].index <= numbersList[i].endIndex
+        ) {
+          onlyGearsymbolsList[j].numsAdjacentTo.push(numbersList[i].num);
+          numbersList[i] = { numChecked: true };
+        }
+      }
+    }
+  }
+
+  for (let i = 0; i < onlyGearsymbolsList.length; i++) {
+    let gearRatio = 1;
+
+    onlyGearsymbolsList[i].numsAdjacentTo.forEach((num) => {
+      gearRatio *= num;
+    });
+
+    if (onlyGearsymbolsList[i].numsAdjacentTo.length >= 2) {
+      total += gearRatio;
+    }
+  }
+
+  return total;
+};
+
 const buildNumsArr = (lines) => {
   const numsList = [];
 
@@ -79,6 +144,7 @@ const buildSymbolsArr = (lines) => {
         symbol: symbol[0],
         row: index,
         index: symbol.index,
+        numsAdjacentTo: [],
       });
     });
   });
@@ -86,4 +152,4 @@ const buildSymbolsArr = (lines) => {
   return symbolsList;
 };
 
-module.exports = { part1 };
+module.exports = { part1, part2 };
