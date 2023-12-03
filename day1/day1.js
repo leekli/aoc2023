@@ -1,16 +1,13 @@
 const part1 = (input) => {
   if (input.length === 0) return 0;
 
-  // Parse the input
   const parsedInputLines = input.split('\n').map((word) => word.trim());
 
   let total = 0;
   const numsByLine = [];
 
   // Match the regex for any digits in each line
-  parsedInputLines.forEach((line) => {
-    numsByLine.push(line.match(/\d/g));
-  });
+  parsedInputLines.forEach((line) => numsByLine.push(line.match(/\d/g)));
 
   // For each line take the first and last index, concatenate the 2 strings then turn to a Number
   numsByLine.forEach((line) => {
@@ -28,7 +25,6 @@ const part1 = (input) => {
 const part2 = (input) => {
   if (input.length === 0) return 0;
 
-  // Parse the input
   const parsedInputLines = input.split('\n').map((word) => word.trim());
 
   const numLookup = {
