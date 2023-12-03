@@ -1,5 +1,4 @@
 const part1 = (input) => {
-  // Parse the input
   const gamesSplit = input.split('\n').map((line) => line.trim());
 
   let total = 0;
@@ -12,8 +11,8 @@ const part1 = (input) => {
     const parsedInputGameIdRemoved = game.replace(/Game (\d+): /g, '');
     const subGamesSplit = parsedInputGameIdRemoved.split('; ');
 
-    // Boolean flag set to true, assume game always won unless changed later to false
-    let currentGameWon = true;
+    // Boolean flag set to false, assume game always lost unless changed later to true
+    let currentGameLost = false;
 
     // Work through each sub-game (each pick of the bag, and check the colours don't break the configuration)
     subGamesSplit.forEach((currSubGame) => {
@@ -22,21 +21,20 @@ const part1 = (input) => {
       splitSubGameColours.forEach((currSubGameColour) => {
         const [count, colour] = currSubGameColour.split(' ');
 
-        if (colour === 'red' && count > 12) currentGameWon = false;
-        if (colour === 'green' && count > 13) currentGameWon = false;
-        if (colour === 'blue' && count > 14) currentGameWon = false;
+        if (colour === 'red' && count > 12) currentGameLost = true;
+        if (colour === 'green' && count > 13) currentGameLost = true;
+        if (colour === 'blue' && count > 14) currentGameLost = true;
       });
     });
 
-    // If game remains won, and all blue/green/red configs are within paramters then allow the Game ID be incremented to current total
-    if (currentGameWon === true) total += currentGameId;
+    // If game is not 'lost', and all blue/green/red configs are within paramters then allow the Game ID be incremented to current total
+    if (currentGameLost === false) total += currentGameId;
   });
 
   return total;
 };
 
 const part2 = (input) => {
-  // Parse the input
   const gamesSplit = input.split('\n').map((line) => line.trim());
 
   let total = 0;
@@ -47,7 +45,7 @@ const part2 = (input) => {
     const subGamesSplit = parsedInputGameIdRemoved.split('; ');
 
     // Tracker to track highest colour of each cube
-    const currGameColourTracker = {
+    const colourTracker = {
       red: 0,
       blue: 0,
       green: 0,
@@ -59,32 +57,20 @@ const part2 = (input) => {
 
       splitSubGameColours.forEach((currSubGameColour) => {
         const [count, colour] = currSubGameColour.split(' ');
-        const countAsNum = Number(count);
 
-        if (colour === 'red') {
-          if (countAsNum > currGameColourTracker['red']) {
-            currGameColourTracker['red'] = countAsNum;
-          }
-        }
+        if (colour === 'red' && +count > colourTracker['red'])
+          colourTracker['red'] = +count;
 
-        if (colour === 'blue') {
-          if (countAsNum > currGameColourTracker['blue']) {
-            currGameColourTracker['blue'] = countAsNum;
-          }
-        }
+        if (colour === 'blue' && +count > colourTracker['blue'])
+          colourTracker['blue'] = +count;
 
-        if (colour === 'green') {
-          if (countAsNum > currGameColourTracker['green']) {
-            currGameColourTracker['green'] = countAsNum;
-          }
-        }
+        if (colour === 'green' && +count > colourTracker['green'])
+          colourTracker['green'] = +count;
       });
     });
 
     const powerOfCubes =
-      currGameColourTracker['red'] *
-      currGameColourTracker['blue'] *
-      currGameColourTracker['green'];
+      colourTracker['red'] * colourTracker['blue'] * colourTracker['green'];
 
     total += powerOfCubes;
   });
