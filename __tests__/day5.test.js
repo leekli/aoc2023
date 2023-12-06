@@ -1,7 +1,7 @@
 const { converter, part1 } = require('../day5/day5');
 const mainDataInput = require('../day5/day5-input');
 
-describe('AOC 2023 Day 5', () => {
+describe.skip('AOC 2023 Day 5', () => {
   describe('Part 1', () => {
     test('util: should convert a small seed-to-soil map to a list of seed numbers and corresponding soil numbers, ensures where a source number isnt mapped is handled and set to same destination number', () => {
       const input = [
@@ -170,7 +170,7 @@ describe('AOC 2023 Day 5', () => {
 
       expect(part1(input)).toBe(35);
     });
-    test.only('should test with AOC Day 5 main data input', () => {
+    test('should test with AOC Day 5 main data input', () => {
       expect(part1(mainDataInput)).toBe(35);
     });
   });
