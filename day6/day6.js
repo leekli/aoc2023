@@ -1,20 +1,21 @@
-const part1 = (input) => {
+const day6 = (input, part = '1') => {
   if (input.length === 0) return 0;
 
-  const parsedInput = input.split('\n');
-  const timesList = parsedInput[0]
-    .replace('Time: ', ' ')
-    .trim()
-    .replace(/\s+/g, ' ')
-    .split(' ')
-    .map((num) => +num);
+  let { timesList, distancesList } = parseInput(input);
 
-  const distancesList = parsedInput[1]
-    .replace('Distance: ', ' ')
-    .trim()
-    .replace(/\s+/g, ' ')
-    .split(' ')
-    .map((num) => +num);
+  if (part === '2') {
+    const newTimesList = timesList
+      .join('')
+      .split(' ')
+      .map((num) => Number(num));
+    const newDistancesList = distancesList
+      .join('')
+      .split(' ')
+      .map((num) => Number(num));
+
+    timesList = newTimesList;
+    distancesList = newDistancesList;
+  }
 
   let total = 1;
 
@@ -41,4 +42,23 @@ const part1 = (input) => {
   return total;
 };
 
-module.exports = { part1 };
+const parseInput = (input) => {
+  const parsedInput = input.split('\n');
+  const timesList = parsedInput[0]
+    .replace('Time: ', ' ')
+    .trim()
+    .replace(/\s+/g, ' ')
+    .split(' ')
+    .map((num) => +num);
+
+  const distancesList = parsedInput[1]
+    .replace('Distance: ', ' ')
+    .trim()
+    .replace(/\s+/g, ' ')
+    .split(' ')
+    .map((num) => +num);
+
+  return { timesList, distancesList };
+};
+
+module.exports = { day6 };
