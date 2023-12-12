@@ -24,38 +24,48 @@ const part1 = (input) => {
   let total = 0;
 
   // Order the hands by the strength of the hand type ranking
-  const orderHandsByStrength = handsInfoObj.toSorted(
+  const orderHandsByStrength = handsInfoObj.sort(
     (a, b) => b.handTypeRank - a.handTypeRank
   );
 
-  // Go through each hand and now apply the overall rank based on location in array
-  orderHandsByStrength.forEach(
-    (hand, index) => (hand.rank = orderHandsByStrength.length - index)
-  );
+  // 👇 a bit brute force, sorry! 👇
 
   // Now go through the ranked types and check if any are the same, then conduct the card-by-card check
-  for (let i = 0; i < orderHandsByStrength.length; i++) {
-    if (orderHandsByStrength[i + 1] !== undefined) {
-      if (
-        orderHandsByStrength[i].handTypeRank ===
-        orderHandsByStrength[i + 1].handTypeRank
-      ) {
-        for (let j = 0; j < orderHandsByStrength[i].handConvToNum.length; j++) {
-          const currHandCard = orderHandsByStrength[i].handConvToNum[j];
-          const nextHandCard = orderHandsByStrength[i + 1].handConvToNum[j];
-          if (currHandCard !== nextHandCard) {
-            if (nextHandCard > currHandCard) {
-              orderHandsByStrength[i + 1].rank++;
-              orderHandsByStrength[i].rank--;
-              break;
-            } else if (currHandCard > nextHandCard) {
-              break;
+  let handSortCount = 1000;
+
+  while (handSortCount !== 0) {
+    for (let i = 0; i < orderHandsByStrength.length; i++) {
+      if (orderHandsByStrength[i + 1] !== undefined) {
+        if (
+          orderHandsByStrength[i].handTypeRank ===
+          orderHandsByStrength[i + 1].handTypeRank
+        ) {
+          for (let j = 0; j < 5; j++) {
+            const currHandCard = orderHandsByStrength[i].handConvToNum[j];
+            const nextHandCard = orderHandsByStrength[i + 1].handConvToNum[j];
+
+            // Check if cards are not equal before comparing and swapping
+            if (currHandCard !== nextHandCard) {
+              if (currHandCard > nextHandCard) {
+                break;
+              } else if (nextHandCard > currHandCard) {
+                const currHandTmp = orderHandsByStrength[i];
+                const nextHandTmp = orderHandsByStrength[i + 1];
+                orderHandsByStrength[i] = nextHandTmp;
+                orderHandsByStrength[i + 1] = currHandTmp;
+                break;
+              }
             }
           }
         }
       }
     }
+    handSortCount--;
   }
+
+  orderHandsByStrength.forEach(
+    (hand, index) => (hand.rank = orderHandsByStrength.length - index)
+  );
 
   // Now total up the ranks by multiplying the bid and the rank number, add to 'total'
   orderHandsByStrength.forEach((hand) => (total += hand.bid * hand.rank));
@@ -90,53 +100,39 @@ const convertHandToType = (hand) => {
   if (cardNumsSorted.length === 1) {
     handType = `5aK`;
     typeRank = typeRankLookup[handType];
-  }
-
-  if (cardNumsSorted.length === 2) {
+  } else if (cardNumsSorted.length === 2) {
     if (cardNumsSorted[0] === 4 && cardNumsSorted[1] === 1) {
       handType = `4aK`;
-      typeRank = typeRankLookup[handType];
-    }
-
-    if (cardNumsSorted[0] === 3 && cardNumsSorted[1] === 2) {
+    } else if (cardNumsSorted[0] === 3 && cardNumsSorted[1] === 2) {
       handType = `Fh`;
-      typeRank = typeRankLookup[handType];
     }
-  }
-
-  if (cardNumsSorted.length === 3) {
+    typeRank = typeRankLookup[handType];
+  } else if (cardNumsSorted.length === 3) {
     if (
       cardNumsSorted[0] === 3 &&
       cardNumsSorted[1] === 1 &&
       cardNumsSorted[2] === 1
     ) {
       handType = `3aK`;
-      typeRank = typeRankLookup[handType];
-    }
-
-    if (
+    } else if (
       cardNumsSorted[0] === 2 &&
       cardNumsSorted[1] === 2 &&
       cardNumsSorted[2] === 1
     ) {
       handType = `2p`;
-      typeRank = typeRankLookup[handType];
     }
-  }
-
-  if (cardNumsSorted.length === 4) {
+    typeRank = typeRankLookup[handType];
+  } else if (cardNumsSorted.length === 4) {
     if (
       cardNumsSorted[0] === 2 &&
       cardNumsSorted[1] === 1 &&
       cardNumsSorted[2] === 1 &&
-      cardNumsSorted[2] === 1
+      cardNumsSorted[3] === 1
     ) {
       handType = `1p`;
-      typeRank = typeRankLookup[handType];
     }
-  }
-
-  if (cardNumsSorted.length === 5) {
+    typeRank = typeRankLookup[handType];
+  } else if (cardNumsSorted.length === 5) {
     handType = `Hc`;
     typeRank = typeRankLookup[handType];
   }

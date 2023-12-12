@@ -95,8 +95,32 @@ describe('AOC 2023 Day 7', () => {
         QQQJA 483`;
       expect(part1(input)).toBe(6440);
     });
+    test('should take larger data with a range of hands', () => {
+      let input = `AAAAA 635
+        32T3J 893
+        A9942 54
+        J57Q8 571
+        779TK 931
+        69696 457
+        Q55Q5 478
+        99399 735
+        TA756 782
+        QQQKQ 838
+        QTJJA 995
+        J7T7T 8
+        22792 790
+        588K8 376
+        6656T 151
+        64725 78
+        J65AA 193
+        68744 920
+        63943 399
+        9KQQ9 685
+        4K2A9 240`;
+      expect(part1(input)).toBe(125927);
+    });
     test('should work with AOC Day 7 main data input', () => {
-      expect(part1(mainDataInput)).toBe(0);
+      expect(part1(mainDataInput)).toBe(251545216);
     });
   });
   describe('Part 2', () => {});
