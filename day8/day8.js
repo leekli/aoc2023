@@ -1,3 +1,5 @@
+const mathjs = require('mathjs');
+
 const part1 = (input) => {
   if (input.length === 0) return 0;
 
@@ -41,10 +43,60 @@ const part2 = (input) => {
 
   const { directionsToGo, directionLookUpObj } = parseInput(input);
 
-  console.log(directionsToGo);
-  console.log(directionLookUpObj);
+  const nodesStartingWithA = Object.keys(directionLookUpObj).filter(
+    (direction) => direction.endsWith('A')
+  );
 
   let total = 0;
+
+  const cycles = [];
+
+  for (let j = 0; j < nodesStartingWithA.length; j++) {
+    let currentNode = nodesStartingWithA[j];
+    let nextNodeToMove = '';
+    let firstZ = '';
+    let stepCount = 0;
+    let cycleComplete = false;
+
+    let i = 0;
+
+    while (true) {
+      const direction = directionsToGo[i];
+
+      nextNodeToMove =
+        direction === 'L'
+          ? directionLookUpObj[currentNode][0]
+          : directionLookUpObj[currentNode][1];
+
+      currentNode = nextNodeToMove;
+
+      stepCount++;
+
+      if (currentNode.endsWith('Z') && !firstZ) {
+        firstZ = currentNode;
+      }
+
+      if (currentNode === firstZ) {
+        cycles.push(stepCount);
+        stepCount = 0;
+        cycleComplete = true;
+      }
+
+      if (cycleComplete) break;
+
+      if (!cycleComplete && i === directionsToGo.length - 1) {
+        i = 0;
+      } else {
+        i++;
+      }
+    }
+  }
+
+  if (cycles.length === 1) {
+    total = cycles[0];
+  } else {
+    total = mathjs.lcm(...cycles);
+  }
 
   return total;
 };

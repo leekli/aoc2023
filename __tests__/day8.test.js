@@ -84,5 +84,21 @@ ZZZ = (ZZZ, ZZZ)`;
 
       expect(part2(input)).toBe(2);
     });
+    test('should return the total number of steps taken when there are multiple nodes starting in parallel which start at A', () => {
+      const input = `LR
+
+11A = (11B, XXX)
+11B = (XXX, 11Z)
+11Z = (11B, XXX)
+22A = (22B, XXX)
+22B = (22C, 22C)
+22C = (22Z, 22Z)
+22Z = (22B, 22B)`;
+
+      expect(part2(input)).toBe(6);
+    });
+    test('should work with AOC Day 8 main input', () => {
+      expect(part2(mainDataInput)).toBe(11188774513823);
+    });
   });
 });
