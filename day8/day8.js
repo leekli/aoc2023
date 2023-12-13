@@ -36,6 +36,19 @@ const part1 = (input) => {
   return total;
 };
 
+const part2 = (input) => {
+  if (input.length === 0) return 0;
+
+  const { directionsToGo, directionLookUpObj } = parseInput(input);
+
+  console.log(directionsToGo);
+  console.log(directionLookUpObj);
+
+  let total = 0;
+
+  return total;
+};
+
 const parseInput = (input) => {
   const directionsToGo = input.split('\n')[0].split('');
   const directionsLeftRight = input.split('\n').slice(2);
@@ -57,4 +70,4 @@ const parseInput = (input) => {
   return { directionsToGo, directionLookUpObj };
 };
 
-module.exports = { part1, parseInput };
+module.exports = { part1, part2, parseInput };

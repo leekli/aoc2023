@@ -1,4 +1,4 @@
-const { part1, parseInput } = require('../day8/day8.js');
+const { part1, part2, parseInput } = require('../day8/day8.js');
 const mainDataInput = require('../day8/day8-input.js');
 
 describe('AOC 2023 Day 8', () => {
@@ -71,5 +71,18 @@ ZZZ = (ZZZ, ZZZ)`;
       expect(part1(mainDataInput)).toBe(22411);
     });
   });
-  describe('Part 2', () => {});
+  describe('Part 2', () => {
+    test('should return 0 when given an empty input', () => {
+      expect(part2('')).toBe(0);
+    });
+    test('should return the total numbers of steps where there is only one node ending in A and Z each', () => {
+      const input = `LR
+
+11A = (11B, XXX)
+11B = (XXX, 11Z)
+11Z = (11B, XXX)`;
+
+      expect(part2(input)).toBe(2);
+    });
+  });
 });
