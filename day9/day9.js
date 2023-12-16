@@ -1,7 +1,5 @@
-const part1 = (input) => {
+const solve = (input) => {
   if (input.length === 0) return 0;
-
-  let total = 0;
 
   // Format input data into nested arrays of nums
   const firstSequencesDataSet = input.split('\n').map((line) => {
@@ -34,6 +32,16 @@ const part1 = (input) => {
       finalSequence = currentSequences[currentSequences.length - 1];
     }
   }
+
+  let p1Total = part1(historyDataSets);
+  let p2Total = part2(historyDataSets);
+
+  return { p1Total, p2Total };
+};
+
+const part1 = (input) => {
+  const historyDataSets = structuredClone(input);
+  let total = 0;
 
   // Now add a placeholder to the end of each sequence, to be replaced later with actual values
   for (const dataSet in historyDataSets) {
@@ -79,6 +87,45 @@ const part1 = (input) => {
   return total;
 };
 
+const part2 = (input) => {
+  const historyDataSets = structuredClone(input);
+  let total = 0;
+
+  for (const dataSet in historyDataSets) {
+    const currentSequences = historyDataSets[dataSet].sequences;
+
+    currentSequences.forEach((sequence) => sequence.unshift('X'));
+  }
+
+  for (const dataSet in historyDataSets) {
+    const currentSequences = historyDataSets[dataSet].sequences;
+
+    for (let i = currentSequences.length - 1; i >= 0; i--) {
+      const numsWithPlaceholderRemoved = currentSequences[i].slice(1);
+      const everyNumSame = numsWithPlaceholderRemoved.every(
+        (num) => num === numsWithPlaceholderRemoved[0]
+      );
+
+      if (i === currentSequences.length - 1) currentSequences[i][0] = 0;
+
+      if (everyNumSame) currentSequences[i][0] = currentSequences[i][1];
+
+      if (!everyNumSame && i !== currentSequences.length - 1)
+        currentSequences[i][0] =
+          currentSequences[i][1] - currentSequences[i + 1][0];
+    }
+  }
+
+  for (const dataSet in historyDataSets) {
+    const firstSequence = historyDataSets[dataSet].sequences[0];
+    const predictionNum = firstSequence[0];
+
+    total += predictionNum;
+  }
+
+  return total;
+};
+
 const findDifferencesBetweenStep = (steps) => {
   const stepDifferences = [];
 
@@ -90,4 +137,4 @@ const findDifferencesBetweenStep = (steps) => {
   return stepDifferences;
 };
 
-module.exports = { part1, findDifferencesBetweenStep };
+module.exports = { solve, findDifferencesBetweenStep };
