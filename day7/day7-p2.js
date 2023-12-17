@@ -147,43 +147,20 @@ const convertHandToTypeP2 = (hand) => {
     }
   }
 
-  if (handType === 'Fh') {
-    if (jokerCards === 1) {
-      handType = '4aK';
-      typeRank = typeRankLookup[handType];
-    }
-    if (jokerCards === 2) {
-      handType = '5aK';
-      typeRank = typeRankLookup[handType];
-    }
-    if (jokerCards === 3) {
-      handType = '5aK';
-      typeRank = typeRankLookup[handType];
-    }
-  }
-
   if (handType === '3aK') {
     if (jokerCards === 1) {
       handType = '4aK';
-      typeRank = typeRankLookup[handType];
-    }
-    if (jokerCards === 2) {
-      handType = '5aK';
       typeRank = typeRankLookup[handType];
     }
   }
 
   if (handType === '2p') {
     if (jokerCards === 1) {
-      handType = 'Fh';
+      handType = '3aK';
       typeRank = typeRankLookup[handType];
     }
     if (jokerCards === 2) {
       handType = '4aK';
-      typeRank = typeRankLookup[handType];
-    }
-    if (jokerCards === 3) {
-      handType = '5aK';
       typeRank = typeRankLookup[handType];
     }
   }
@@ -193,12 +170,11 @@ const convertHandToTypeP2 = (hand) => {
       handType = '3aK';
       typeRank = typeRankLookup[handType];
     }
-    if (jokerCards === 2) {
-      handType = '4aK';
-      typeRank = typeRankLookup[handType];
-    }
-    if (jokerCards === 3) {
-      handType = '5aK';
+  }
+
+  if (handType === 'Hc') {
+    if (jokerCards === 1) {
+      handType = '1p';
       typeRank = typeRankLookup[handType];
     }
   }
