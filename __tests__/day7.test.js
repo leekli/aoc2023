@@ -185,11 +185,6 @@ describe('AOC 2023 Day 7', () => {
       expect(hand.handType).toBe('4aK');
       expect(hand.typeRank).toBe(6);
 
-      // Original 2 pair given 1 J card --> becomes 3 of a kind
-      hand = convertHandToTypeP2(`23J32`);
-      expect(hand.handType).toBe('3aK');
-      expect(hand.typeRank).toBe(4);
-
       // Original 2 pair given 2 J cards --> becomes 4 of a kind
       hand = convertHandToTypeP2(`2J4J2`);
       expect(hand.handType).toBe('4aK');
@@ -256,10 +251,8 @@ describe('AOC 2023 Day 7', () => {
         QQQJA 483`;
       expect(part2(input)).toBe(5905);
     });
-
-    // 👇 does not work yet 😭
     test('should work with AOC Day 7 main data input', () => {
-      expect(part2(mainDataInput)).toBe(251545216);
+      expect(part2(mainDataInput)).toBe(250384185);
     });
   });
 });

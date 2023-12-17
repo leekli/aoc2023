@@ -95,6 +95,18 @@ const convertHandToTypeP2 = (hand) => {
     handCardCount[card]++;
   });
 
+  const jCards = handCardCount['J'];
+
+  if (jCards) {
+    delete handCardCount['J'];
+
+    const highestCard = Object.keys(handCardCount).sort(
+      (a, b) => handCardCount[b] - handCardCount[a]
+    );
+
+    handCardCount[highestCard[0]] += jCards;
+  }
+
   const cardNumsSorted = Object.values(handCardCount).sort((a, b) => b - a);
 
   if (cardNumsSorted.length === 1) {
@@ -135,48 +147,6 @@ const convertHandToTypeP2 = (hand) => {
   } else if (cardNumsSorted.length === 5) {
     handType = `Hc`;
     typeRank = typeRankLookup[handType];
-  }
-
-  // Now check the Joker cards and make amendment to hand if needed
-  const jokerCards = hand.split('').filter((card) => card === 'J').length;
-
-  if (handType === '4aK') {
-    if (jokerCards === 1) {
-      handType = '5aK';
-      typeRank = typeRankLookup[handType];
-    }
-  }
-
-  if (handType === '3aK') {
-    if (jokerCards === 1) {
-      handType = '4aK';
-      typeRank = typeRankLookup[handType];
-    }
-  }
-
-  if (handType === '2p') {
-    if (jokerCards === 1) {
-      handType = '3aK';
-      typeRank = typeRankLookup[handType];
-    }
-    if (jokerCards === 2) {
-      handType = '4aK';
-      typeRank = typeRankLookup[handType];
-    }
-  }
-
-  if (handType === '1p') {
-    if (jokerCards === 1) {
-      handType = '3aK';
-      typeRank = typeRankLookup[handType];
-    }
-  }
-
-  if (handType === 'Hc') {
-    if (jokerCards === 1) {
-      handType = '1p';
-      typeRank = typeRankLookup[handType];
-    }
   }
 
   return { handType, typeRank };
