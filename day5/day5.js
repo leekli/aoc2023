@@ -73,8 +73,6 @@ const parseInput = (input) => {
     .map((line) => line.trim())
     .join('\n');
 
-  console.log(splitInput, 's');
-
   const formattedMaps = splitInput
     .replace('seed-to-soil map:\n', '')
     .split(/\n+[a-z\-]+ map:\n/)
@@ -83,8 +81,6 @@ const parseInput = (input) => {
     );
 
   formattedMaps[0].shift();
-
-  console.log(formattedMaps);
 
   return { formattedSeeds, formattedMaps };
 };
